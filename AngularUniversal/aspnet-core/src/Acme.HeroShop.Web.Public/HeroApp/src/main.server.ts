@@ -38,3 +38,5 @@ export default createServerRenderer((params: BootFuncParams) => {
     });
   });
 });
+
+export { renderModule, renderModuleFactory } from '@angular/platform-server';

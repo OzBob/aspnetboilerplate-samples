@@ -1,0 +1,153 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "client-app": {
+      "root": "HeroApp",
+      "sourceRoot": "HeroApp/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "wwwroot/dist",
+            "index": "HeroApp/src/index.html",
+            "main": "HeroApp/src/main.ts",
+            "tsConfig": "HeroApp/src/tsconfig.app.json",
+            "polyfills": "HeroApp/src/polyfills.ts",
+            "assets": [
+              "HeroApp/src/assets",
+              "HeroApp/src/favicon.ico"
+            ],
+            "styles": [
+              "HeroApp/src/assets/bootstrap.min.css",
+              "HeroApp/src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ],
+            "aot": true
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "HeroApp/src/environments/environment.ts",
+                  "with": "HeroApp/src/environments/environment.prod.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "client-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "client-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "client-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "HeroApp/src/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "HeroApp/src/polyfills.ts",
+            "tsConfig": "HeroApp/src/tsconfig.spec.json",
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ],
+            "styles": [
+              "HeroApp/src/assets/bootstrap.min.css",
+              "HeroApp/src/styles.css"
+            ],
+            "assets": [
+              "HeroApp/src/assets",
+              "HeroApp/src/favicon.ico"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "HeroApp/dist-server",
+            "main": "HeroApp/src/main.server.ts",
+            "tsConfig": "HeroApp/src/tsconfig.server.json"
+          }
+        }
+      }
+    },
+    "client-app-e2e": {
+      "root": "HeroApp/e2e",
+      "sourceRoot": "HeroApp/e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "client-app:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "client-app",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "style": "css"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
+}
